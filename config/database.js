@@ -7,10 +7,10 @@ const dbConnect = () => {
         console.log(`Database : ${conn.connection.host}`);
         return conn;
     })
-    .catch((err) => {
-        console.log("error happened while trying to connect to the DB : ", err);
-        process.exit(1);
-    });
+    // .catch((err) => {
+    //     console.log("error happened while trying to connect to the DB : ", err);
+    //     process.exit(1);
+    // });
 }
 
 module.exports = dbConnect;

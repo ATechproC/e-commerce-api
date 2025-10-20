@@ -1,6 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const Category = require("../models/categoryModel");
-const slugify = require("slugify");;
+const slugify = require("slugify");
+
+const ApiError = require("../utils/ApiError");
 
 const create_category_post = asyncHandler(async (req, res) => {
 
@@ -24,21 +26,20 @@ const get_categories = asyncHandler(async (req, res) => {
     res.status(200).json({ result : categories.length, data: categories });
 })
 
-const get_category_by_id = asyncHandler(async (req, res) => {
+const get_category_by_id = asyncHandler(async (req, res, next) => {
 
     const { categoryId } = req.params;
 
     const category = await Category.findById(categoryId);
 
     if(!category) {
-        res.status(404).json(`category with the id : ${categoryId} does not exist!!`);
-        return;
+        return next(new ApiError(`category with the id : ${categoryId} does not exist!!`, 404));
     }
 
     res.status(200).json({message : "category was founded!!", data : category});
 })
 
-const update_category = asyncHandler(async (req, res) => {
+const update_category = asyncHandler(async (req, res, next) => {
     const { categoryId } = req.params;
 
     const {name} = req.body;
@@ -49,26 +50,23 @@ const update_category = asyncHandler(async (req, res) => {
     } , {new : true});
 
     if(!updatedCategory) {
-        res.status(404).json(`category with the id : ${categoryId} does not exist!!`);
-        return;
+        return next(new ApiError(`category with the id : ${categoryId} does not exist!!`, 404));
     }
 
     res.status(200).json({message : "category updated successfully!!", data : updatedCategory})
 })
 
-const delete_category = asyncHandler(async (req, res) => {
+const delete_category = asyncHandler(async (req, res, next) => {
 
     const { categoryId } = req.params;
 
     const deletedCategory = await Category.findByIdAndDelete(categoryId);
 
     if(!deletedCategory) {
-        res.status(404).json(`category with the id : ${categoryId} does not exist!!`);
-        return;
+        return next(new ApiError(`category with the id : ${categoryId} does not exist!!`, 404));
     }
 
     res.status(200).json({ message : "category deleted successfully!!", data : deletedCategory});
-
 })
 
 module.exports = {
