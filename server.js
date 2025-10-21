@@ -25,13 +25,22 @@ app.use(express.json());
 
 // set up routes : 
 
-const categoriesRoute = require("./api/categoriesRoute");
+    //  handle categories routes : 
+
+const categoriesRoute = require("./api/categoryRoutes");
 
 app.use("/api/v1", categoriesRoute);
+
+// handle subCategories routes :
+
+const subCategoriesRoutes = require("./api/subCategoryRoutes");
+
+app.use("/api/v1", subCategoriesRoutes);
 
 app.use(/.*/, (req, res, next) => {
     next(new ApiError(`Not Found : ${req.method} ${req.originalUrl}`, 404))
 })
+
 
 // Global error handling Middleware : 
 
