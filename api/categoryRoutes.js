@@ -38,4 +38,8 @@ router.delete("/categories/:categoryId",
     delete_category
 );
 
+// const subCategoriesRoutes = require("./subCategoryRoutes");
+// router.use("/:categoryId/subCategories",  subCategoriesRoutes)
+
+
 module.exports = router;

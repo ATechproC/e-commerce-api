@@ -13,7 +13,8 @@ const categorySchema = new Schema({
     slug : {
         type : String,
         lowercase : true
-    }
+    },
+    image : String
 }, {
     timestamps : true
 });

@@ -23,19 +23,26 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json());
 
+// =========================================================== 
+
 // set up routes : 
 
-    //  handle categories routes : 
+    //  handle category routes : 
 
-const categoriesRoute = require("./api/categoryRoutes");
+        const categoriesRoute = require("./api/categoryRoutes");
+        app.use("/api/v1", categoriesRoute);
 
-app.use("/api/v1", categoriesRoute);
+    // handle subCategory routes :
 
-// handle subCategories routes :
+    const subCategoriesRoutes = require("./api/subCategoryRoutes");
+    app.use("/api/v1", subCategoriesRoutes);
 
-const subCategoriesRoutes = require("./api/subCategoryRoutes");
+    // handle brand routes :
 
-app.use("/api/v1", subCategoriesRoutes);
+    const brandRoutes = require("./api/brandRoutes");
+    app.use("/api/v1", brandRoutes);
+
+// =========================================================== 
 
 app.use(/.*/, (req, res, next) => {
     next(new ApiError(`Not Found : ${req.method} ${req.originalUrl}`, 404))

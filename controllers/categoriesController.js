@@ -23,7 +23,7 @@ const get_categories = asyncHandler(async (req, res) => {
     const skip = ( page - 1 ) * limit;
 
     const categories = await Category.find({}).skip(skip).limit(limit);
-    res.status(200).json({ result : categories.length, data: categories });
+    res.status(200).json({ result : categories.length, page, data: categories });
 })
 
 const get_category_by_id = asyncHandler(async (req, res, next) => {
